@@ -38,6 +38,8 @@ const HERO_ZOOM_PHASE_VH = 0.6; // extra scroll (in viewport-heights), *after* t
 // out - the two don't run at the same time.
 let scrubbing = true;
 let scrubQueued = false;
+let pendingVideoTime = null;
+let videoSeekInFlight = false;
 
 function applyScrub() {
   scrubQueued = false;
@@ -60,8 +62,11 @@ function applyScrub() {
   // Collapsing to one seek per rendered frame, and skipping it entirely
   // while a previous seek is still resolving, keeps it to only the seeks
   // that can actually complete in time.
-  // Set the target on every animation frame so scrubbing works in both directions.
-  heroVideo.currentTime = videoProgress * heroVideo.duration;
+  pendingVideoTime = videoProgress * heroVideo.duration;
+  if (!videoSeekInFlight) {
+    videoSeekInFlight = true;
+    heroVideo.currentTime = pendingVideoTime;
+  }
 
   if (heroIntro) {
     const introOpacity = Math.max(0, 1 - videoProgress / INTRO_FADE_RANGE);
@@ -82,6 +87,12 @@ function updateScrub() {
 
 window.addEventListener('scroll', updateScrub, { passive: true });
 heroVideo.addEventListener('loadedmetadata', updateScrub);
+heroVideo.addEventListener('seeked', () => {
+  videoSeekInFlight = false;
+  if (scrubbing && pendingVideoTime != null && Math.abs(heroVideo.currentTime - pendingVideoTime) > 0.02) {
+    updateScrub();
+  }
+});
 
 heroPlayBtn?.addEventListener('click', () => {
   if (heroVideo.paused) {
