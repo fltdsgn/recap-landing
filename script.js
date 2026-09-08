@@ -38,7 +38,6 @@ const HERO_ZOOM_PHASE_VH = 0.6; // extra scroll (in viewport-heights), *after* t
 // out - the two don't run at the same time.
 let scrubbing = true;
 let scrubQueued = false;
-let latestVideoTime = null;
 
 function applyScrub() {
   scrubQueued = false;
@@ -61,9 +60,9 @@ function applyScrub() {
   // Collapsing to one seek per rendered frame, and skipping it entirely
   // while a previous seek is still resolving, keeps it to only the seeks
   // that can actually complete in time.
-  // Keep the newest target while a large MP4 finishes seeking.
-  latestVideoTime = videoProgress * heroVideo.duration;
-  if (!heroVideo.seeking) heroVideo.currentTime = latestVideoTime;
+  if (!heroVideo.seeking) {
+    heroVideo.currentTime = videoProgress * heroVideo.duration;
+  }
 
   if (heroIntro) {
     const introOpacity = Math.max(0, 1 - videoProgress / INTRO_FADE_RANGE);
@@ -84,12 +83,6 @@ function updateScrub() {
 
 window.addEventListener('scroll', updateScrub, { passive: true });
 heroVideo.addEventListener('loadedmetadata', updateScrub);
-heroVideo.addEventListener('seeked', () => {
-  if (!scrubbing || latestVideoTime == null || heroVideo.seeking) return;
-  if (Math.abs(heroVideo.currentTime - latestVideoTime) > 0.01) {
-    heroVideo.currentTime = latestVideoTime;
-  }
-});
 
 heroPlayBtn?.addEventListener('click', () => {
   if (heroVideo.paused) {
