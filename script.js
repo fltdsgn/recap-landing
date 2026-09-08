@@ -60,9 +60,8 @@ function applyScrub() {
   // Collapsing to one seek per rendered frame, and skipping it entirely
   // while a previous seek is still resolving, keeps it to only the seeks
   // that can actually complete in time.
-  if (!heroVideo.seeking) {
-    heroVideo.currentTime = videoProgress * heroVideo.duration;
-  }
+  // Set the target on every animation frame so scrubbing works in both directions.
+  heroVideo.currentTime = videoProgress * heroVideo.duration;
 
   if (heroIntro) {
     const introOpacity = Math.max(0, 1 - videoProgress / INTRO_FADE_RANGE);
