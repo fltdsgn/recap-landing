@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recap — landing</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-loader" id="page-loader">
+    <div class="page-loader__logo">Recap.</div>
+    <div class="page-loader__bar"><div class="page-loader__bar-fill"></div></div>
+  </div>
+
+  <div class="light-content">
+  <section class="hero" id="hero">
+    <div class="hero__pin">
+      <div class="hero__card">
+        <div class="hero__video-wrap" id="hero-video-wrap">
+          <video
+            class="hero__video"
+            id="hero-video"
+            muted
+            playsinline
+            preload="auto"
+            poster="assets/img/hero-static-scene.png"
+          >
+            <source src="assets/video/hero.mp4" type="video/mp4" />
+          </video>
+
+          <div class="hero__intro" id="hero-intro">
+            <p class="hero__intro-text">
+              <span class="word-reveal" style="transition-delay: 0s">Years</span><br />
+              <span class="word-reveal" style="transition-delay: 0.06s">in</span> <span class="word-reveal" style="transition-delay: 0.12s">design.</span><br />
+              <span class="word-reveal" style="transition-delay: 0.18s">Still</span> <span class="word-reveal" style="transition-delay: 0.24s">afraid</span><br />
+              <span class="hero__intro-text--accent"><span class="word-reveal" style="transition-delay: 0.3s">of</span> <span class="word-reveal" style="transition-delay: 0.36s">team</span><br /><span class="word-reveal" style="transition-delay: 0.42s">calls?</span></span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="benefits" id="benefits">
+    <div class="benefits__pin">
+      <div class="benefits__scene">
+        <div class="benefits__header sticky-note sticky-note--orange" id="benefits-header">
+          <div class="benefits__header-content">
+            <div class="benefits__header-titles">
+              <h2 class="benefits__title">Before<br />During. After</h2>
+              <span class="pill">ONE MEETING</span>
+            </div>
+            <p class="benefits__lead">Plan what to say. Record what happened. Understand the conversation after.</p>
+          </div>
+          <button class="benefits__arrow-btn" aria-label="See benefits">
+            <img src="assets/img/benefits-arrow-icon.svg" alt="" />
+          </button>
+        </div>
+
+        <div class="benefits__stack" id="benefits-stack">
+          <article class="sticky-note sticky-note--cream benefits__card" data-card-index="3" style="--rotate: -15.96deg">
+            <h3>Carry less of it with you</h3>
+            <img class="benefits__icon" src="assets/img/benefit-icon-carry-less.png" alt="" />
+            <p>Compare what you planned to say with what you actually said, and spot the moments where your message changed or got lost.</p>
+          </article>
+
+          <article class="sticky-note sticky-note--orange benefits__card" data-card-index="2" style="--rotate: 4deg">
+            <h3>See what got lost</h3>
+            <img class="benefits__icon" src="assets/img/benefit-icon-see-lost.png" alt="" />
+            <p>Search the transcript yourself or ask questions about the conversation and get answers grounded in what was really said.</p>
+          </article>
+
+          <article class="sticky-note sticky-note--blue benefits__card" data-card-index="1" style="--rotate: -10.67deg">
+            <h3>Stay present</h3>
+            <img class="benefits__icon" src="assets/img/benefit-icon-stay-present.png" alt="" />
+            <p>Record the meeting while you focus on the people in it. Recap keeps the conversation so you can return to it later.</p>
+          </article>
+
+          <article class="sticky-note sticky-note--white benefits__card" data-card-index="0" style="--rotate: 3deg">
+            <h3>Feel more prepared</h3>
+            <img class="benefits__icon" src="assets/img/benefit-icon-feel-prepared.png" alt="" />
+            <p>Write down what you want to say before the meeting starts, so your thoughts stay clear even when the conversation gets messy.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mission" id="mission">
+    <div class="mission__card reveal">
+      <div data-reveal-group>
+        <img class="mission__sticker mission__sticker--note reveal" src="assets/img/mission-sticker-sticky-note.png" alt="" style="--rotate: -18.42deg" />
+        <img class="mission__sticker mission__sticker--crumpled reveal" src="assets/img/mission-sticker-crumpled-note.png" alt="" style="--rotate: 3.19deg" />
+        <img class="mission__sticker mission__sticker--speech reveal" src="assets/img/mission-sticker-speech-bubble.png" alt="" style="--rotate: -38.7deg" />
+        <img class="mission__sticker mission__sticker--question reveal" src="assets/img/mission-sticker-question-bubble.png" alt="" style="--rotate: 13.26deg" />
+      </div>
+
+      <p class="mission__quote" data-reveal-group>
+        <span class="blur-line">Explaining your design can be</span>
+        <span class="blur-line">a headache.</span>
+        <span class="blur-line mission__quote-accent">Our mission is</span>
+        <span class="blur-line mission__quote-accent">to make it easier</span>
+      </p>
+
+      <p class="mission__subtitle" data-reveal-group>
+        <span class="blur-line">Because understanding what happened</span>
+        <span class="blur-line">is the first step to doing it better next time</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="product" id="product">
+    <div class="product__card">
+      <p class="product__title" data-reveal-group>
+        <span class="blur-line">Your conversations,</span>
+        <span class="blur-line">all in one place</span>
+      </p>
+      <span class="product__scribble product__scribble--left">
+        your own logic
+        <img class="scribble-arrow scribble-arrow--left" src="assets/img/Arrow l.svg" alt="" />
+      </span>
+      <span class="product__scribble product__scribble--right">
+        drag things around
+        <img class="scribble-arrow scribble-arrow--right" src="assets/img/Arrow R.svg" alt="" />
+      </span>
+
+      <div class="board-demo" id="board-demo">
+        <div class="board-demo__loader" id="board-demo-loader">
+          <div class="board-demo__loader-logo">Recap.</div>
+          <div class="board-demo__loader-bar"><div class="board-demo__loader-bar-fill"></div></div>
+        </div>
+
+        <h2 class="board-demo__title">All meets</h2>
+
+        <div class="board-demo__toolbar">
+          <div class="board-demo__toolbar-avatar">
+            <img src="assets/img/agenda-avatar-5.png" alt="" draggable="false">
+          </div>
+          <span class="board-demo__toolbar-caret"></span>
+          <span class="board-demo__toolbar-divider"></span>
+          <span class="board-demo__toolbar-zoom">250%</span>
+          <span class="board-demo__toolbar-caret"></span>
+          <span class="board-demo__toolbar-divider"></span>
+          <span class="board-demo__toolbar-create">+ Create new session</span>
+        </div>
+
+        <aside class="board-demo__sidebar">
+          <div class="folder folder--active">
+            <div class="folder__stack"></div>
+            <div class="folder__papers">
+              <div class="folder__card folder__card--1"><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="folder__card folder__card--2"><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="folder__card folder__card--3"><span></span><span></span><span></span><span></span><span></span></div>
+            </div>
+            <div class="folder__base"></div>
+            <span class="folder__num">6 sessions</span>
+            <span class="folder__name">All meets</span>
+          </div>
+          <div class="folder">
+            <div class="folder__stack"></div>
+            <div class="folder__papers">
+              <div class="folder__card folder__card--1"><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="folder__card folder__card--2"><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="folder__card folder__card--3"><span></span><span></span><span></span><span></span><span></span></div>
+            </div>
+            <div class="folder__base"></div>
+            <span class="folder__num">4 sessions</span>
+            <span class="folder__name">Design</span>
+          </div>
+          <div class="folder">
+            <div class="folder__stack"></div>
+            <div class="folder__papers">
+              <div class="folder__card folder__card--1"><span></span><span></span><span></span><span></span><span></span></div>
+            </div>
+            <div class="folder__base"></div>
+            <span class="folder__num">1 session</span>
+            <span class="folder__name">Development</span>
+          </div>
+          <div class="folder">
+            <div class="folder__stack"></div>
+            <div class="folder__papers">
+              <div class="folder__card folder__card--1"><span></span><span></span><span></span><span></span><span></span></div>
+            </div>
+            <div class="folder__base"></div>
+            <span class="folder__num">1 session</span>
+            <span class="folder__name">Marketing</span>
+          </div>
+        </aside>
+
+        <div class="board-demo__viewport">
+          <div class="board-demo__world" id="board-demo-world">
+            <div class="note note--tan note--pending" style="left: 32%; top: 52%; --note-rotate: -14.86deg;">
+              <div class="note__head">
+                <div class="avatar-stack">
+                  <div class="avatar avatar--solo"><img src="assets/img/agenda-avatar-3.png" alt="" draggable="false"></div>
+                </div>
+              </div>
+              <div class="note__content">
+                <p class="note__meta">Aug 18 · 3:00 PM</p>
+                <p class="note__text">Keep the hero simpler <span>and move proof points higher</span></p>
+                <span class="badge">Development</span>
+              </div>
+            </div>
+
+            <div class="note note--tan note--pending" style="left: 44%; top: 22%; --note-rotate: 10.01deg;">
+              <div class="note__head">
+                <div class="avatar-stack">
+                  <div class="avatar avatar--solo"><img src="assets/img/agenda-avatar-5.png" alt="" draggable="false"></div>
+                </div>
+              </div>
+              <div class="note__content">
+                <p class="note__meta">Aug 18 · 3:00 PM</p>
+                <p class="note__text">Keep the interaction, <span>but simplify the animation states</span></p>
+                <span class="badge">WannaBe</span>
+              </div>
+            </div>
+
+            <div class="note note--white note--pending" style="left: 38%; top: 34%; --note-rotate: -10.59deg;">
+              <div class="note__head">
+                <div class="avatar-stack">
+                  <div class="avatar"><img src="assets/img/agenda-avatar-1.png" alt="" draggable="false"></div>
+                  <div class="avatar"><img src="assets/img/agenda-avatar-2.png" alt="" draggable="false"></div>
+                  <div class="avatar avatar--counter">+2</div>
+                </div>
+              </div>
+              <div class="note__content">
+                <p class="note__meta">Aug 22 · 13:00 AM</p>
+                <p class="note__text">Users understand <span>the feature, but don't see</span> why they need it yet</p>
+                <span class="badge">Design</span>
+              </div>
+            </div>
+
+            <div class="note note--tan note--pending" style="left: 55%; top: 40%; --note-rotate: 10.2deg;">
+              <div class="note__head">
+                <div class="avatar-stack">
+                  <div class="avatar"><img src="assets/img/agenda-avatar-2.png" alt="" draggable="false"></div>
+                  <div class="avatar"><img src="assets/img/agenda-avatar-4.png" alt="" draggable="false"></div>
+                  <div class="avatar"><img src="assets/img/agenda-avatar-6.png" alt="" draggable="false"></div>
+                  <div class="avatar"><img src="assets/img/agenda-avatar-3.png" alt="" draggable="false"></div>
+                </div>
+              </div>
+              <div class="note__content">
+                <p class="note__meta">Aug 6 · 5:00 PM</p>
+                <p class="note__text">Show the decision-<span>making earlier, not only the</span> final UI</p>
+                <span class="badge">Personal</span>
+              </div>
+            </div>
+
+            <div class="note note--tan note--pending" style="left: 27%; top: 36%; --note-rotate: -6deg;">
+              <div class="note__head">
+                <div class="avatar-stack">
+                  <div class="avatar avatar--solo"><img src="assets/img/agenda-avatar-4.png" alt="" draggable="false"></div>
+                </div>
+              </div>
+              <div class="note__content">
+                <p class="note__meta">Aug 12 · 11:00 AM</p>
+                <p class="note__text">Track the churn number <span>weekly, not just at the</span> end of the month</p>
+                <span class="badge">Marketing</span>
+              </div>
+            </div>
+
+            <div class="note note--tan note--pending" style="left: 48%; top: 12%; --note-rotate: 9.28deg;">
+              <div class="note__head">
+                <div class="avatar-stack">
+                  <div class="avatar"><img src="assets/img/agenda-avatar-1.png" alt="" draggable="false"></div>
+                  <div class="avatar"><img src="assets/img/agenda-avatar-2.png" alt="" draggable="false"></div>
+                  <div class="avatar"><img src="assets/img/agenda-avatar-3.png" alt="" draggable="false"></div>
+                  <div class="avatar avatar--counter">+2</div>
+                </div>
+              </div>
+              <div class="note__content">
+                <p class="note__meta">Aug 22 · 13:00 AM</p>
+                <p class="note__text">Feature Adoption <span>Check-in - early signals look</span> promising</p>
+                <span class="badge">WannaBe</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="board-demo__agenda">
+          <p class="board-demo__agenda-title">Agenda</p>
+
+          <div class="board-demo__agenda-filters">
+            <span class="board-demo__agenda-pill board-demo__agenda-pill--active">All</span>
+            <span class="board-demo__agenda-pill">Today</span>
+            <span class="board-demo__agenda-pill">Tomorrow</span>
+            <span class="board-demo__agenda-pill">30 Aug</span>
+            <span class="board-demo__agenda-pill">31 Aug</span>
+          </div>
+
+          <div class="board-demo__agenda-list">
+            <div class="board-demo__agenda-card board-demo__agenda-card--active">
+              <div class="board-demo__agenda-card-head">
+                <p class="board-demo__agenda-card-title">Product Roadmap Alignment</p>
+                <svg class="board-demo__agenda-star" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6-4.5-4.2 6.1-.7L12 3z" stroke="#201c1d" stroke-width="1.4" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="board-demo__agenda-tags">
+                <span class="board-demo__agenda-tag">Discussed component library updates</span>
+                <span class="board-demo__agenda-tag">and design tokens</span>
+              </div>
+              <div class="board-demo__agenda-card-foot">
+                <div class="avatar-stack avatar-stack--sm">
+                  <div class="avatar"><img src="assets/img/agenda-avatar-1.png" alt="" draggable="false"></div>
+                  <div class="avatar"><img src="assets/img/agenda-avatar-2.png" alt="" draggable="false"></div>
+                  <div class="avatar"><img src="assets/img/agenda-avatar-3.png" alt="" draggable="false"></div>
+                  <div class="avatar"><img src="assets/img/agenda-avatar-4.png" alt="" draggable="false"></div>
+                  <div class="avatar avatar--counter">+2</div>
+                </div>
+                <span class="board-demo__agenda-time">Today, 10:00 AM</span>
+              </div>
+            </div>
+
+            <div class="board-demo__agenda-card">
+              <div class="board-demo__agenda-card-head">
+                <p class="board-demo__agenda-card-title">Design Critique</p>
+                <svg class="board-demo__agenda-star" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6-4.5-4.2 6.1-.7L12 3z" stroke="#201c1d" stroke-width="1.4" stroke-linejoin="round"/></svg>
+              </div>
+              <p class="board-demo__agenda-card-desc">Keep the interaction, but simplify the animation states</p>
+              <div class="board-demo__agenda-card-foot">
+                <div class="avatar-stack avatar-stack--sm">
+                  <div class="avatar"><img src="assets/img/agenda-avatar-1.png" alt="" draggable="false"></div>
+                  <div class="avatar"><img src="assets/img/agenda-avatar-3.png" alt="" draggable="false"></div>
+                </div>
+                <span class="board-demo__agenda-time">Tomorrow, 3:30 PM</span>
+              </div>
+            </div>
+
+            <div class="board-demo__agenda-card">
+              <div class="board-demo__agenda-card-head">
+                <p class="board-demo__agenda-card-title">User Research Synthesis</p>
+                <svg class="board-demo__agenda-star" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6-4.5-4.2 6.1-.7L12 3z" stroke="#201c1d" stroke-width="1.4" stroke-linejoin="round"/></svg>
+              </div>
+              <p class="board-demo__agenda-card-desc">Key insights around trust and onboarding.</p>
+              <div class="board-demo__agenda-card-foot">
+                <div class="avatar-stack avatar-stack--sm">
+                  <div class="avatar"><img src="assets/img/agenda-avatar-1.png" alt="" draggable="false"></div>
+                  <div class="avatar"><img src="assets/img/agenda-avatar-3.png" alt="" draggable="false"></div>
+                  <div class="avatar"><img src="assets/img/agenda-avatar-2.png" alt="" draggable="false"></div>
+                </div>
+                <span class="board-demo__agenda-time">30 Aug, 2:00 PM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services-fade" id="services">
+    <div class="services-fade__pin">
+      <article class="service services-fade__stage" data-stage-index="0">
+        <div class="service__text">
+          <span class="service__badge">Before</span>
+          <h2 class="service__title" data-split-words>Prepare before the call</h2>
+          <p class="service__desc" data-split-words>Capture your thoughts before the meeting, then compare them with what actually came out in the conversation</p>
+          <span class="service__scribble">
+            <svg class="service__scribble-arrow" viewBox="0 0 40 40" fill="none"><path d="M8 34c0-11 6-18 15-20M15 8l8 6-2 10" stroke="#201c1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            before it begins
+          </span>
+        </div>
+        <div class="service__board">
+          <img class="service__board-img" src="assets/img/service-board-prepare.png" alt="" />
+
+          <div class="service__folders">
+            <div class="service__folder-slot">
+              <div class="folder folder--active">
+                <div class="folder__stack"></div>
+                <div class="folder__papers">
+                  <div class="folder__card folder__card--1"><span></span><span></span><span></span><span></span><span></span></div>
+                  <div class="folder__card folder__card--2"><span></span><span></span><span></span><span></span><span></span></div>
+                  <div class="folder__card folder__card--3"><span></span><span></span><span></span><span></span><span></span></div>
+                </div>
+                <div class="folder__base"></div>
+                <span class="folder__num">12 sessions</span>
+                <span class="folder__name">All meets</span>
+              </div>
+            </div>
+            <div class="service__folder-slot">
+              <div class="folder">
+                <div class="folder__stack"></div>
+                <div class="folder__papers">
+                  <div class="folder__card folder__card--1"><span></span><span></span><span></span><span></span><span></span></div>
+                  <div class="folder__card folder__card--2"><span></span><span></span><span></span><span></span><span></span></div>
+                  <div class="folder__card folder__card--3"><span></span><span></span><span></span><span></span><span></span></div>
+                </div>
+                <div class="folder__base"></div>
+                <span class="folder__num">2 sessions</span>
+                <span class="folder__name">Design</span>
+              </div>
+            </div>
+            <div class="service__folder-slot">
+              <div class="folder">
+                <div class="folder__stack"></div>
+                <div class="folder__papers">
+                  <div class="folder__card folder__card--1"><span></span><span></span><span></span><span></span><span></span></div>
+                  <div class="folder__card folder__card--2"><span></span><span></span><span></span><span></span><span></span></div>
+                </div>
+                <div class="folder__base"></div>
+                <span class="folder__num">13 sessions</span>
+                <span class="folder__name">Marketing</span>
+              </div>
+            </div>
+            <div class="service__folder-slot">
+              <div class="folder">
+                <div class="folder__stack"></div>
+                <div class="folder__papers">
+                  <div class="folder__card folder__card--1"><span></span><span></span><span></span><span></span><span></span></div>
+                </div>
+                <div class="folder__base"></div>
+                <span class="folder__num">1 session</span>
+                <span class="folder__name">Development</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="service services-fade__stage" data-stage-index="1">
+        <div class="service__text">
+          <span class="service__badge">During</span>
+          <h2 class="service__title" data-split-words>Stay in the conversation</h2>
+          <p class="service__desc" data-split-words>Recap listens in the background while you focus on the people, not the notes</p>
+        </div>
+        <div class="service__board">
+          <img class="service__board-img" src="assets/img/service-board-during.png" alt="" />
+
+          <div class="service__wave-live" id="service-wave-orb"></div>
+
+          <div class="service__processing-loader pixel-loader">
+            <div class="pixel-loader__grid">
+              <span style="animation-delay:90ms"></span><span style="animation-delay:180ms"></span><span style="animation-delay:270ms"></span>
+              <span style="animation-delay:0ms"></span><span style="animation-delay:90ms"></span><span style="animation-delay:180ms"></span>
+              <span style="animation-delay:90ms"></span><span style="animation-delay:180ms"></span><span style="animation-delay:270ms"></span>
+            </div>
+            <span class="service__processing-text">This can take a while -<br />we'll let you know.</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="service services-fade__stage" data-stage-index="2">
+        <div class="service__text">
+          <span class="service__badge">After</span>
+          <h2 class="service__title" data-split-words>See what actually happened</h2>
+          <p class="service__desc" data-split-words>Review the transcript, compare it with what you planned to say, and ask questions about the moments that mattered</p>
+        </div>
+        <div class="service__board">
+          <img class="service__board-img" src="assets/img/service-board-after.png" alt="" />
+
+          <div class="service__qa">
+            <div class="service__bubble">
+              <img class="service__bubble-avatar" src="assets/img/agenda-avatar-3.png" alt="" />
+              <div class="service__bubble-card">
+                <div class="service__bubble-head"><span>Nikolay Ray</span><span>Developer</span></div>
+                <div class="service__bubble-row"><p>Can you walk me through why you changed the navigation structure?</p><time>10:01</time></div>
+              </div>
+            </div>
+            <div class="service__answer"><p>The previous version forced users to scan too many options at once. I simplified the hierarchy so the main actions are easier to find.</p><time>10:02</time></div>
+
+            <div class="service__bubble">
+              <img class="service__bubble-avatar" src="assets/img/agenda-avatar-4.png" alt="" />
+              <div class="service__bubble-card">
+                <div class="service__bubble-head"><span>Olivia Chen</span><span>Design Lead</span></div>
+                <div class="service__bubble-row"><p>What makes you confident this version actually reduces cognitive load?</p><time>10:03</time></div>
+              </div>
+            </div>
+            <div class="service__bubble">
+              <img class="service__bubble-avatar" src="assets/img/agenda-avatar-4.png" alt="" />
+              <div class="service__bubble-card">
+                <div class="service__bubble-head"><span>Olivia Chen</span><span>Design Lead</span></div>
+                <div class="service__bubble-row"><p>Did you test the new structure before adding more features?</p><time>10:05</time></div>
+              </div>
+            </div>
+            <div class="service__answer"><p>Not yet. I wanted to validate the navigation first, then build on it once the core flow is clear.</p><time>10:06</time></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+  </div>
+
+  <section class="cta" id="cta">
+    <div class="cta__pin">
+      <div class="cta__inner">
+        <h2 class="cta__title" data-reveal-group>
+          <span class="reveal">Recap </span><span class="reveal cta__title-accent">your call</span>
+        </h2>
+
+        <div class="cta__form-wrap">
+          <div class="cta__form">
+            <input class="cta__input" type="email" placeholder="Your E-mail" />
+            <a href="https://fltdsgn.github.io/recap/" class="cta__submit">Join beta</a>
+          </div>
+          <p class="cta__note">Private beta &middot; Try now</p>
+        </div>
+
+        <div class="cta__scribble cta__scribble--left">
+          <span>no more overthinking</span>
+          <img class="cta__scribble-arrow" src="assets/img/cta-squiggle-left.svg" alt="" />
+        </div>
+        <div class="cta__scribble cta__scribble--right">
+          <span>we&rsquo;ll keep it simple</span>
+          <img class="cta__scribble-arrow" src="assets/img/cta-squiggle-right.svg" alt="" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" id="footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__content">
+        <div class="site-footer__columns">
+          <div class="site-footer__col">
+            <h3>Product</h3>
+            <p>Features</p>
+            <p>How it works</p>
+            <p>Board</p>
+            <p>Beta</p>
+          </div>
+          <div class="site-footer__col">
+            <h3>Company</h3>
+            <p>About</p>
+            <p>FAQ</p>
+            <p>Contact</p>
+          </div>
+          <div class="site-footer__col">
+            <h3>Social</h3>
+            <p>Twitter / X</p>
+            <p>Telegram</p>
+            <p>GitHub</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-footer__content site-footer__content--wordmark">
+        <p class="site-footer__wordmark">recap.</p>
+      </div>
+
+      <div class="site-footer__content">
+        <div class="site-footer__bottom">
+          <div class="site-footer__legal">
+            <span>&copy; 2026 Recap</span>
+            <span>Built by Vasily For wannabe</span>
+          </div>
+          <div class="site-footer__legal">
+            <span>Privacy Policy</span>
+            <span>Terms Of Service</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="float-menu is-entering">
+    <div class="float-menu__panel" id="float-menu-panel">
+      <a href="#hero">Home</a>
+      <a href="#benefits">Benefits</a>
+      <a href="#mission">Mission</a>
+      <a href="#product">Product</a>
+      <a href="#services">Services</a>
+    </div>
+    <button class="float-menu__btn float-menu__btn--icon" id="hero-play-btn" aria-label="Play video">
+      <img src="assets/img/play-icon.svg" alt="" />
+    </button>
+    <a href="#cta" class="float-menu__btn float-menu__btn--main">Join beta</a>
+    <button class="float-menu__btn float-menu__btn--icon float-menu__hamburger" id="hero-menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="float-menu-panel">
+      <span class="float-menu__hamburger-line"></span>
+      <span class="float-menu__hamburger-line"></span>
+    </button>
+  </nav>
+
+  <script type="module" src="assets/js/wave-init.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
