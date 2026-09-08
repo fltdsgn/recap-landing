@@ -4,9 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recap — landing</title>
+  <link rel="icon" href="assets/img/Favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="assets/img/Favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/img/Favicon.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="page-loader" id="page-loader">
+    <div class="page-loader__logo">Recap.</div>
+    <div class="page-loader__bar"><div class="page-loader__bar-fill"></div></div>
+  </div>
+
   <div class="light-content">
   <section class="hero" id="hero">
     <div class="hero__pin">
@@ -25,7 +33,10 @@
 
           <div class="hero__intro" id="hero-intro">
             <p class="hero__intro-text">
-              Years<br />in design.<br />Still afraid<br /><span class="hero__intro-text--accent">of team<br />calls?</span>
+              <span class="word-reveal" style="transition-delay: 0s">Years</span><br />
+              <span class="word-reveal" style="transition-delay: 0.06s">in</span> <span class="word-reveal" style="transition-delay: 0.12s">design.</span><br />
+              <span class="word-reveal" style="transition-delay: 0.18s">Still</span> <span class="word-reveal" style="transition-delay: 0.24s">afraid</span><br />
+              <span class="hero__intro-text--accent"><span class="word-reveal" style="transition-delay: 0.3s">of</span> <span class="word-reveal" style="transition-delay: 0.36s">team</span><br /><span class="word-reveal" style="transition-delay: 0.42s">calls?</span></span>
             </p>
           </div>
         </div>
@@ -478,10 +489,10 @@
         </h2>
 
         <div class="cta__form-wrap">
-          <form class="cta__form">
-            <input class="cta__input" type="email" placeholder="Your E-mail" required />
-            <button class="cta__submit" type="submit">Join beta</button>
-          </form>
+          <div class="cta__form">
+            <input class="cta__input" type="email" placeholder="Your E-mail" />
+            <a href="https://fltdsgn.github.io/recap/" class="cta__submit">Join beta</a>
+          </div>
           <p class="cta__note">Private beta &middot; Try now</p>
         </div>
 
@@ -542,7 +553,7 @@
     </div>
   </footer>
 
-  <nav class="float-menu">
+  <nav class="float-menu is-entering">
     <div class="float-menu__panel" id="float-menu-panel">
       <a href="#hero">Home</a>
       <a href="#benefits">Benefits</a>

@@ -5,6 +5,20 @@
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
 
+// ---------- Page loader ---------- //
+// Same brief splash as the real recap app - a plain timed fade, not tied to
+// actual asset-load state. The hero intro's word-by-word reveal and the
+// floating menu's slide-up entrance are timed to land right as it clears,
+// so the page doesn't just sit there fully formed underneath a fading curtain.
+const pageLoader = document.getElementById('page-loader');
+const heroIntroEl = document.getElementById('hero-intro');
+const floatMenuEl = document.querySelector('.float-menu');
+setTimeout(() => {
+  pageLoader?.classList.add('is-hidden');
+  heroIntroEl?.classList.add('is-revealed');
+  floatMenuEl?.classList.remove('is-entering');
+}, 1100);
+
 const heroSection = document.getElementById('hero');
 const heroVideo = document.getElementById('hero-video');
 const heroPlayBtn = document.getElementById('hero-play-btn');
