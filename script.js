@@ -113,6 +113,9 @@ heroPlayBtn?.addEventListener('click', () => {
 // each stage sends the next sticky note (starting with the orange intro
 // card) flying straight up and out, revealing the one stacked behind it.
 const benefitsSection = document.getElementById('benefits');
+const benefitsSceneSlot = document.getElementById('benefits-scene-slot');
+const benefitsScene = document.getElementById('benefits-scene');
+const benefitsFlip = document.getElementById('benefits-flip');
 const benefitsHeader = document.getElementById('benefits-header');
 const benefitsCards = document.querySelectorAll('.benefits__card');
 
@@ -120,6 +123,23 @@ benefitsCards.forEach((card) => {
   const index = Number(card.dataset.cardIndex);
   card.style.setProperty('--fade-delay', `${index * 0.12}s`);
 });
+
+// .benefits__scene stays a fixed 630x576 (so the flip card's own math never
+// has to think about viewport size) and is scaled down as one uniform unit
+// to fit whatever the slot's width/height clamp leaves available - same
+// slot+scale approach as .service__board-slot, chosen because clamping
+// width (vw) and height (vh) independently on the scene itself let its
+// aspect ratio drift and squash the card whenever a viewport's width and
+// height didn't shrink together.
+function updateBenefitsSceneScale() {
+  if (!benefitsSceneSlot || !benefitsScene) return;
+  const rect = benefitsSceneSlot.getBoundingClientRect();
+  const scale = Math.min(1, rect.width / 630, rect.height / 576);
+  benefitsScene.style.transform = `translate(-50%, -50%) scale(${scale})`;
+}
+
+window.addEventListener('resize', updateBenefitsSceneScale);
+updateBenefitsSceneScale();
 
 function clamp01(n) {
   return Math.min(1, Math.max(0, n));
@@ -137,9 +157,19 @@ function updateBenefits() {
   const stage = progress * stageCount;
 
   const headerP = clamp01(stage);
+  if (benefitsFlip) {
+    // The header and the white card underneath are really one physical
+    // card with two faces glued back-to-back, so this single wrapper does
+    // the entire 180deg turn - backface-visibility on each face then
+    // handles which one is actually showing, with a clean handoff exactly
+    // at the 90deg midpoint (no manual z-index juggling needed).
+    benefitsFlip.style.transform = `rotateY(${headerP * -180}deg)`;
+  }
   if (benefitsHeader) {
-    benefitsHeader.style.transform = `translateY(${headerP * -60}%)`;
-    benefitsHeader.classList.toggle('is-visible', headerP < 1);
+    // The hard sticky-note shadow reads as a flat 2D offset, so once it
+    // starts turning it just skews into an ugly sliver - cut it the instant
+    // rotation begins instead of trying to fake correct geometry.
+    benefitsHeader.style.setProperty('--shadow-fade', headerP > 0 ? '0' : '1');
   }
 
   const CARD_REST = 0.35; // fraction of each card's stage it just sits still before sliding away
@@ -147,19 +177,44 @@ function updateBenefits() {
 
   benefitsCards.forEach((card) => {
     const index = Number(card.dataset.cardIndex);
-    // The back-most card in the pile stays put instead of flying off too -
-    // otherwise the screen empties out right before the next section starts,
-    // which reads as an oversized gap.
+    // Card 0 (white) is the back face of the header's card - it's fixed
+    // 180deg away from the front face and turns only because the shared
+    // .benefits__flip wrapper rotates; backface-visibility keeps it hidden
+    // until it swings past the halfway point.
+    const isBackFace = index === 0;
+    const baseTransform = isBackFace
+      ? `rotate(var(--rotate, 0deg)) rotateY(180deg)`
+      : `rotate(var(--rotate, 0deg))`;
+
+    if (isBackFace) {
+      // Only visible for the second half of the flip (headerP 0.5-1) - fade
+      // its shadow in across that same visible window instead of the whole
+      // 0-1 range, so it starts at 0 right as the sliver becomes visible.
+      const backShadow = clamp01((headerP - 0.5) / 0.5);
+      card.style.setProperty('--shadow-fade', String(backShadow));
+    }
+
     if (index === lastIndex) {
-      card.style.transform = `rotate(var(--rotate, 0deg))`;
+      // The back-most card in the pile stays put instead of flying off too -
+      // otherwise the screen empties out right before the next section
+      // starts, which reads as an oversized gap.
+      card.style.transform = baseTransform;
       card.classList.toggle('is-visible', headerP >= 1);
       return;
     }
 
     const localP = clamp01(stage - (index + 1));
     const cardP = clamp01((localP - CARD_REST) / (1 - CARD_REST));
-    card.style.transform = `rotate(var(--rotate, 0deg)) translateY(${cardP * -60}%)`;
-    card.classList.toggle('is-visible', headerP >= 1 && cardP < 1);
+    card.style.transform = `${baseTransform} translateY(${cardP * -60}%)`;
+    if (isBackFace) {
+      // Visible only from the moment it swings into view (headerP > 0.5)
+      // through the end of its own slide-away - not gated by the shared
+      // is-visible class, so it actually disappears again once it's gone,
+      // instead of staying stuck at full opacity forever.
+      card.style.opacity = headerP > 0.5 && cardP < 1 ? '1' : '0';
+    } else {
+      card.classList.toggle('is-visible', headerP >= 1 && cardP < 1);
+    }
   });
 }
 
@@ -448,3 +503,31 @@ function fitFooterWordmark() {
 window.addEventListener('resize', fitFooterWordmark);
 document.fonts.ready.then(fitFooterWordmark);
 fitFooterWordmark();
+
+// ---------- Services board: scale to fit instead of overflowing ----------
+//
+// .service__board-slot is the responsive flex item; .service__board itself
+// stays a constant 1010x810 (all its overlaid children - folders, waveform,
+// processing loader, qa chat - are positioned with fixed px against that
+// exact size). Scaling the whole thing down to match the slot's actual
+// rendered width keeps every overlay correctly placed with zero changes to
+// their own code, on any screen narrow enough that the board would
+// otherwise have overflowed the card.
+const SERVICE_BOARD_RADIUS = 44; // px, matches .service__board-slot's base border-radius
+
+function updateServiceBoardScale() {
+  document.querySelectorAll('.service__board-slot').forEach((slot) => {
+    const board = slot.querySelector(':scope > .service__board');
+    if (!board) return;
+    const scale = slot.getBoundingClientRect().width / 1010;
+    board.style.transform = `scale(${scale})`;
+    // The slot's own corner radius clips the scaled-down board from
+    // outside - it doesn't shrink along with the board's transform (that
+    // only affects what's drawn *inside* the slot), so without this the
+    // corners look proportionally too round on a scaled-down board.
+    slot.style.borderRadius = `${SERVICE_BOARD_RADIUS * scale}px`;
+  });
+}
+
+window.addEventListener('resize', updateServiceBoardScale);
+updateServiceBoardScale();

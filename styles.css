@@ -79,18 +79,22 @@ button {
 .hero__card {
   position: relative;
   overflow: hidden;
-  border-radius: 56px;
+  /* Scales with viewport width (56px was tuned for the ~1923px design
+     width) instead of staying fixed - a flat 56px looks disproportionately
+     round once the card itself has shrunk a lot on a narrow screen. */
+  border-radius: clamp(24px, 2.91vw, 56px);
   background: var(--paper);
-  aspect-ratio: 1923 / 1080;
   max-width: 1923px;
-  /* width:100% alone let the card grow tall enough (via aspect-ratio) to
-     get clipped by the viewport on wide-but-not-proportionally-tall screens
-     (~1800px+) since .hero__pin is a fixed 100vh with no scroll of its own.
-     min() also caps the width to whatever height actually fits (100vh minus
-     .hero__pin's 24px top+bottom padding), converted through the aspect
-     ratio, so the card shrinks by width on those screens instead of
-     overflowing by height. */
-  width: min(100%, calc((100vh - 48px) * 1923 / 1080));
+  /* Fills .hero__pin's whole padded box instead of keeping a fixed 1923:1080
+     aspect-ratio - that used to either get clipped by the viewport (wide-
+     but-not-proportionally-tall screens) or, once capped by height, leave a
+     letterboxed gap above/below on narrower ones (aspect-ratio always
+     produces a shorter card as width shrinks, and centering it in the pin
+     put that shortfall on show as bare background). The video inside
+     already uses object-fit:cover, so it just crops to whatever shape this
+     ends up being instead of ever leaving dead space. */
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
   /* transform (scale) is driven every frame by script.js's scroll progress,
      for a slight zero.university-style zoom-out as the hero scrolls away. */
@@ -98,11 +102,18 @@ button {
 }
 
 .hero__video-wrap {
+  /* Always full-bleed (object-fit:cover on the video below crops instead of
+     letterboxing). Letterboxing was tried for narrower desktop windows, but
+     a fixed 1923:1080 shape inside a fixed 100vh pin *will* leave a gap
+     somewhere - top, bottom, or split - any time the available width can't
+     support that ratio at the full pin height; there is no anchor that
+     makes the gap disappear, only where it shows up. Cropping is the only
+     way to guarantee no gap at all, and true small-screen mobile is a
+     separate static design anyway, not handled by this scaling. */
   position: absolute;
   inset: 0;
-  border-radius: 0 0 64px 64px;
+  border-radius: 0 0 clamp(28px, 3.33vw, 64px) clamp(28px, 3.33vw, 64px);
   overflow: hidden;
-  background: var(--cream);
 }
 
 .hero__video {
@@ -211,11 +222,22 @@ button {
   justify-content: center;
   border-radius: 28px;
   text-decoration: none;
-  transition: transform 0.15s ease;
+  /* Neo-brutalist "peel off the shadow, press flush on click" interaction:
+     resting state sits on a flat shadow (per-variant below), hover lifts it
+     up-left and grows the shadow to sell the extra height, active slams it
+     back down flush with the shadow gone entirely. */
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-radius 0.2s ease;
 }
 
 .float-menu__btn:hover {
-  transform: translateY(-2px);
+  transform: translate(-3px, -3px);
+  border-radius: 18px;
+}
+
+.float-menu__btn:active {
+  transform: translate(0, 0);
+  border-radius: 28px;
+  box-shadow: none !important;
 }
 
 .float-menu__btn--icon {
@@ -224,6 +246,10 @@ button {
   background: var(--cream);
   border: 2px solid var(--ink);
   box-shadow: 0 4px 0 0 var(--ink);
+}
+
+.float-menu__btn--icon:hover {
+  box-shadow: 7px 7px 0 0 var(--ink);
 }
 
 .float-menu__btn--icon img {
@@ -277,6 +303,10 @@ button {
   line-height: 24px;
   text-align: center;
   white-space: nowrap;
+}
+
+.float-menu__btn--main:hover {
+  box-shadow: 7px 7px 0 0 var(--orange-shadow);
 }
 
 /* ---------- Shared: scroll reveal ---------- */
@@ -339,25 +369,25 @@ button {
 .sticky-note--orange {
   background: var(--note-orange);
   color: var(--white);
-  box-shadow: -7px 16px 0 0 var(--note-shadow);
+  box-shadow: -7px 16px 0 0 rgba(18, 36, 70, var(--shadow-fade, 1));
 }
 
 .sticky-note--blue {
   background: var(--note-blue);
   color: var(--white);
-  box-shadow: -3px 6px 0 0 var(--note-shadow);
+  box-shadow: -3px 6px 0 0 rgba(18, 36, 70, var(--shadow-fade, 1));
 }
 
 .sticky-note--cream {
   background: var(--note-cream);
   color: var(--ink);
-  box-shadow: -3px 6px 0 0 var(--note-shadow);
+  box-shadow: -3px 6px 0 0 rgba(18, 36, 70, var(--shadow-fade, 1));
 }
 
 .sticky-note--white {
   background: var(--white);
   color: var(--ink);
-  box-shadow: -7px 16px 0 0 var(--note-shadow);
+  box-shadow: -7px 16px 0 0 rgba(18, 36, 70, var(--shadow-fade, 1));
 }
 
 .sticky-note h2,
@@ -406,28 +436,46 @@ button {
   padding-bottom: 160px;
 }
 
-.benefits__scene {
+/* The available space - was .benefits__scene's own size before, now just
+   the slot's, so the fixed-size scene inside can be scaled down uniformly
+   (script.js) instead of having width (vw) and height (vh) clamp
+   independently, which distorted the card's proportions whenever a
+   viewport's width and height didn't shrink at the same rate. */
+.benefits__scene-slot {
   position: relative;
   width: min(630px, 90vw);
   height: min(576px, 68vh);
 }
 
-.benefits__header {
+.benefits__scene {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 630px;
+  height: 576px;
+  transform-origin: center;
+  perspective: 1200px;
+}
+
+.benefits__flip {
   position: absolute;
   inset: 0;
   z-index: 5;
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+}
+
+.benefits__header {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 82px;
-  opacity: 0;
-  transition: transform 0.15s ease-out, opacity 0.3s ease-out;
-  will-change: transform, opacity;
-}
-
-.benefits__header.is-visible {
-  opacity: 1;
+  backface-visibility: hidden;
 }
 
 .benefits__header-content {
@@ -504,7 +552,13 @@ button {
   letter-spacing: -0.02em;
 }
 
-.benefits__card[data-card-index="0"] { z-index: 4; }
+.benefits__card[data-card-index="0"] {
+  /* This is the back face of the header card (glued together, one flip -
+     see .benefits__flip). Its opacity is driven entirely by inline style
+     from JS (visible mid-flip through its own slide-away, hidden before
+     and after), not by the shared .is-visible class. */
+  backface-visibility: hidden;
+}
 .benefits__card[data-card-index="1"] { z-index: 3; }
 .benefits__card[data-card-index="2"] { z-index: 2; }
 .benefits__card[data-card-index="3"] { z-index: 1; }
@@ -537,7 +591,7 @@ button {
   align-items: center;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(32px, 6.3vw, 122px);
+  font-size: clamp(28px, 3.2vw + 20px, 122px);
   line-height: 0.92;
   letter-spacing: -0.01em;
   text-align: center;
@@ -556,7 +610,7 @@ button {
   align-items: center;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 40px;
+  font-size: clamp(18px, 1.4vw + 14px, 40px);
   line-height: 1.11;
   letter-spacing: 0.01em;
   text-align: center;
@@ -577,8 +631,8 @@ button {
 }
 
 .mission__sticker--crumpled {
-  left: 14.79%;
-  top: 13.33%;
+  left: 24%;
+  top: 3%;
   width: clamp(70px, 9.62vw, 180px);
 }
 
@@ -589,8 +643,8 @@ button {
 }
 
 .mission__sticker--question {
-  right: 12.99%;
-  top: 50%;
+  right: 20%;
+  top: 64%;
   width: clamp(80px, 10.48vw, 196px);
 }
 
@@ -1264,14 +1318,33 @@ button {
 
 .service {
   position: absolute;
-  inset: 24px 40px;
+  inset: 0 40px auto;
+  top: 50%;
+  /* Vertically centered (translateY below) instead of pinned to top:24px -
+     height:auto (next) means a shorter stage (less content, or a scaled-
+     down board) is a shorter card, and anchoring from the top alone just
+     left the *extra* space stranded below it as a stray gap of bare
+     .light-content background before the next section. Centering instead
+     distributes the found space evenly above/below, which reads as
+     intentional at any height. */
+  transform: translateY(-50%);
   max-width: 1869px;
-  height: 890px;
+  /* height:auto instead of a fixed 890px so the card hugs its content - 890
+     was really just "the board's natural 810px height plus 40px top/bottom
+     padding" at full scale, but stayed fixed even when .service__board-slot
+     scales down on narrower screens, leaving a tall card with dead space
+     below a shrunken board. */
   margin: 0 auto;
   border-radius: 56px;
   background: #f2ebdd;
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  /* space-between, not just a gap: once .service__board-slot hits its own
+     1010px cap while the card itself keeps growing toward its 1869px cap
+     (roughly >1700px viewports), nothing was left to absorb the extra
+     width, so it just sat as dead space to the right of the board. This
+     pins the board to the card's right edge instead. */
+  justify-content: space-between;
   gap: 40px;
   padding: 40px 40px 40px 89px;
   transition: transform 0.15s ease-out;
@@ -1332,7 +1405,14 @@ button {
 }
 
 .service__text {
-  flex: 1;
+  /* A fixed-ish preferred width (with room to shrink at the very narrowest
+     viewports) rather than flex:1 - flex:1 let the board's own fixed 1010px
+     width push text down to almost nothing before the board itself finally
+     ran out of room and overflowed the card. Giving text priority here, and
+     letting .service__board-slot (below) absorb the squeeze instead, fixes
+     both problems at once. */
+  flex: 0 1 460px;
+  min-width: 260px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1391,14 +1471,30 @@ button {
   height: 32px;
 }
 
-.service__board {
+/* .service__board-slot is the flex item and owns the responsive size: it
+   shrinks (down to whatever .service__text doesn't need) instead of the old
+   fixed-width board overflowing the card on narrower screens. script.js
+   measures the slot's actual rendered width each resize and scales
+   .service__board - which stays a constant 1010x810 internally, so none of
+   its fixed-px children (folders/waveform/processing-loader/qa chat) need
+   to know anything changed - to fit inside it. */
+.service__board-slot {
   position: relative;
-  flex: 0 0 auto;
-  width: auto;
-  height: 100%;
+  flex: 1 1 0%;
+  max-width: 1010px;
   aspect-ratio: 1010 / 810;
+  align-self: center;
   border-radius: 44px;
   overflow: hidden;
+}
+
+.service__board {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1010px;
+  height: 810px;
+  transform-origin: top left;
   background: #1f396b;
 }
 
@@ -1636,6 +1732,13 @@ button {
   .pixel-loader__grid span { animation: none; opacity: 0.5; }
 }
 
+@media (max-width: 1500px) {
+  .service {
+    gap: 24px;
+    padding: 40px 24px 40px 48px;
+  }
+}
+
 @media (max-width: 900px) {
   .service {
     flex-direction: column;
@@ -1646,8 +1749,10 @@ button {
     flex: none;
   }
 
-  .service__board {
+  .service__board-slot {
+    width: 100%;
     max-width: 100%;
+    flex: none;
   }
 }
 
@@ -1803,6 +1908,18 @@ button {
   font-size: 16px;
   letter-spacing: -0.02em;
   text-decoration: none;
+  /* No border/hard-shadow on this one (flat design, unlike the float-menu
+     buttons), so just a plain scale for the press feedback. */
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.cta__submit:hover {
+  transform: scale(1.04);
+  background: #35302f;
+}
+
+.cta__submit:active {
+  transform: scale(0.97);
 }
 
 .cta__note {
@@ -1948,6 +2065,25 @@ button {
   font-size: 16px;
   letter-spacing: -0.01em;
   opacity: 0.81;
+}
+
+/* .site-footer__inner's aspect-ratio was measured off a 1923px-wide Figma
+   frame, and only the wordmark's own size actually scales with viewport
+   width (font-size: vw-based) - the columns/bottom row use fixed px sizes,
+   so past ~1920px the aspect-ratio box keeps growing taller while the
+   content above the wordmark doesn't, and margin-top:auto dumps all of
+   that extra height into a growing gap that pushes "recap." away from the
+   nav columns. Past that width, drop the ratio and go back to a normal
+   fixed gap instead, the same way the mobile breakpoint below already
+   does at the other extreme. */
+@media (min-width: 1921px) {
+  .site-footer__inner {
+    aspect-ratio: auto;
+  }
+
+  .site-footer__content--wordmark {
+    margin-top: 24px;
+  }
 }
 
 @media (max-width: 860px) {

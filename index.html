@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recap — landing</title>
-  <link rel="icon" type="image/svg+xml" href="assets/img/Favicon.svg" />`n  <link rel="alternate icon" type="image/png" href="assets/img/Favicon.png" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/Favicon.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/img/Favicon.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -44,18 +45,27 @@
 
   <section class="benefits" id="benefits">
     <div class="benefits__pin">
-      <div class="benefits__scene">
-        <div class="benefits__header sticky-note sticky-note--orange" id="benefits-header">
-          <div class="benefits__header-content">
-            <div class="benefits__header-titles">
-              <h2 class="benefits__title">Before<br />During. After</h2>
-              <span class="pill">ONE MEETING</span>
+      <div class="benefits__scene-slot" id="benefits-scene-slot">
+      <div class="benefits__scene" id="benefits-scene">
+        <div class="benefits__flip" id="benefits-flip">
+          <div class="benefits__header sticky-note sticky-note--orange" id="benefits-header">
+            <div class="benefits__header-content">
+              <div class="benefits__header-titles">
+                <h2 class="benefits__title">Before<br />During. After</h2>
+                <span class="pill">ONE MEETING</span>
+              </div>
+              <p class="benefits__lead">Plan what to say. Record what happened. Understand the conversation after.</p>
             </div>
-            <p class="benefits__lead">Plan what to say. Record what happened. Understand the conversation after.</p>
+            <button class="benefits__arrow-btn" aria-label="See benefits">
+              <img src="assets/img/benefits-arrow-icon.svg" alt="" />
+            </button>
           </div>
-          <button class="benefits__arrow-btn" aria-label="See benefits">
-            <img src="assets/img/benefits-arrow-icon.svg" alt="" />
-          </button>
+
+          <article class="sticky-note sticky-note--white benefits__card" data-card-index="0" style="--rotate: 3deg">
+            <h3>Feel more prepared</h3>
+            <img class="benefits__icon" src="assets/img/benefit-icon-feel-prepared.png" alt="" />
+            <p>Write down what you want to say before the meeting starts, so your thoughts stay clear even when the conversation gets messy.</p>
+          </article>
         </div>
 
         <div class="benefits__stack" id="benefits-stack">
@@ -76,13 +86,8 @@
             <img class="benefits__icon" src="assets/img/benefit-icon-stay-present.png" alt="" />
             <p>Record the meeting while you focus on the people in it. Recap keeps the conversation so you can return to it later.</p>
           </article>
-
-          <article class="sticky-note sticky-note--white benefits__card" data-card-index="0" style="--rotate: 3deg">
-            <h3>Feel more prepared</h3>
-            <img class="benefits__icon" src="assets/img/benefit-icon-feel-prepared.png" alt="" />
-            <p>Write down what you want to say before the meeting starts, so your thoughts stay clear even when the conversation gets messy.</p>
-          </article>
         </div>
+      </div>
       </div>
     </div>
   </section>
@@ -97,15 +102,16 @@
       </div>
 
       <p class="mission__quote" data-reveal-group>
-        <span class="blur-line">Explaining your design can be</span>
-        <span class="blur-line">a headache.</span>
+        <span class="blur-line">Explaining your design</span>
+        <span class="blur-line">can be a headache.</span>
         <span class="blur-line mission__quote-accent">Our mission is</span>
         <span class="blur-line mission__quote-accent">to make it easier</span>
       </p>
 
       <p class="mission__subtitle" data-reveal-group>
-        <span class="blur-line">Because understanding what happened</span>
-        <span class="blur-line">is the first step to doing it better next time</span>
+        <span class="blur-line">Because understanding</span>
+        <span class="blur-line">what happened is the first</span>
+        <span class="blur-line">step to doing it better next time</span>
       </p>
     </div>
   </section>
@@ -359,6 +365,7 @@
             before it begins
           </span>
         </div>
+        <div class="service__board-slot">
         <div class="service__board">
           <img class="service__board-img" src="assets/img/service-board-prepare.png" alt="" />
 
@@ -414,6 +421,7 @@
             </div>
           </div>
         </div>
+        </div>
       </article>
 
       <article class="service services-fade__stage" data-stage-index="1">
@@ -422,6 +430,7 @@
           <h2 class="service__title" data-split-words>Stay in the conversation</h2>
           <p class="service__desc" data-split-words>Recap listens in the background while you focus on the people, not the notes</p>
         </div>
+        <div class="service__board-slot">
         <div class="service__board">
           <img class="service__board-img" src="assets/img/service-board-during.png" alt="" />
 
@@ -436,6 +445,7 @@
             <span class="service__processing-text">This can take a while -<br />we'll let you know.</span>
           </div>
         </div>
+        </div>
       </article>
 
       <article class="service services-fade__stage" data-stage-index="2">
@@ -444,6 +454,7 @@
           <h2 class="service__title" data-split-words>See what actually happened</h2>
           <p class="service__desc" data-split-words>Review the transcript, compare it with what you planned to say, and ask questions about the moments that mattered</p>
         </div>
+        <div class="service__board-slot">
         <div class="service__board">
           <img class="service__board-img" src="assets/img/service-board-after.png" alt="" />
 
@@ -473,6 +484,7 @@
             </div>
             <div class="service__answer"><p>Not yet. I wanted to validate the navigation first, then build on it once the core flow is clear.</p><time>10:06</time></div>
           </div>
+        </div>
         </div>
       </article>
     </div>
